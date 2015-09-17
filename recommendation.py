@@ -54,3 +54,22 @@ critics = {
         },
     }
 
+# Returns a distance based similarity score for person1 and person2
+def sim_distance(prefs, person1, person2):
+    # Get the list of shared items
+    si = {}
+    for item in prefs[person1]:
+        if item in prefs[person2]:
+            si[item] = 1
+
+    # if they have no ratings in common return zero
+    if len(si) == 0 : return 0
+    
+    print (si)
+
+    # Add up the squares of all the differences
+    sum_of_squares = sum([pow(prefs[person1][item] - prefs[person2][item], 2) for item, _ in si.items()])
+    return 1/(1 + sqrt(sum_of_squares))
+
+
+# print (sim_distance(critics, "Lisa Rose", "Gene Seymour"))
